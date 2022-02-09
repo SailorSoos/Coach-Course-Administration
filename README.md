@@ -6,14 +6,14 @@ Pre course
 Post course
 Other administrative
 
-Pre course - includes
+Pre course - 
 ltsprecourse
 
-Post course - includes
+Post course - 
 postprocess
 singlecert
 
-Other administrative
+Other administrative - 
 certreval
 
 
