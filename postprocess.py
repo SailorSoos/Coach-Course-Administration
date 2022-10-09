@@ -15,6 +15,7 @@ import os.path
 from docx.api import Document
 from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
+from docx2pdf import convert
 excel_sheet = pd.read_excel("c:/Users/Peters/Downloads/process_these.xlsx")
 
 #Email signature details
@@ -32,9 +33,12 @@ email_signature = (line_1 + line_2 + line_3 + line_4 + line_5 + line_6 + line_7)
 #Assistant = "As an Assistant Learn to Sail Coach you are qualified to assist with the"
 #Head = "As a Head Learn to Sail Coach you are qualified to teach all aspects of the"
 #buddy = "As a Buddy Learn to Sail Coach you are qualified to assist with the"
+#and one of the below:
+#LTS = 
 
 #Generic form of the Keelboat cert, nothing specific to add
 #Generic form of the race and regatta cert, nothing specific to add
+
 
 i = 0
 while i < len(excel_sheet):
@@ -71,7 +75,16 @@ while i < len(excel_sheet):
 
         #add this as a universal item in a class 
         path = ('c:\\Users\Peters\Documents\CDM\Certificates')
-        course_type = "Assistant"
+        course_type1 = "Assistant"
+        course_type2 = "Assistant Learn to Sail Coach (Dinghy) Certificate."
+        body = (("Dear ") + course_participant + (",<br><br>You have successfully completed the Yachting New Zealand Learn to Sail Coach Course. I am pleased to advise that you are now an officially recognised <b> Assistant Learn to Sail Coach. </b>"
+                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
+                "As a ") + course_type1 + (" Learn to Sail Coach you are qualified to assist with the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
+                "Your qualification is valid until ") + expiry_date + (" at which time you will need to revalidate. Please find enclosed your <b>") + course_type2 + ("</b> You can upgrade to a Learn to sail coach when you turn 18 or working with the feedback the coach developer has given to upgrade your certificate. When you are ready to upgrade, you can by filling out a revalidation from, available to download off the Yachting New Zealand website.   <br><br>"
+                "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
+                "If you are interested in furthering your coaching experience you may be keen to look at some becoming a Race Coach – information can be found under the <b>Coaches</b> page on the Yachting New Zealand website. Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
+                "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
+                "Regards,<br><br>") + email_signature)
         
 #assistcert starts here
         if course_certification == 'assistcert':
@@ -94,7 +107,6 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
-                from docx2pdf import convert
                 convert((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
                 os.remove((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
 
@@ -105,14 +117,7 @@ while i < len(excel_sheet):
 #Create the email 
                 mail.To = participant_email
                 mail.Subject = 'Yachting New Zealand - Coaching Course Certificate - ' + course_participant 
-                mail.HTMLBody = ("Dear ") + course_participant + (",<br><br>You have successfully completed the Yachting New Zealand Learn to Sail Coach Course. I am pleased to advise that you are now an officially recognised <b> Assistant Learn to Sail Coach. </b>"
-                        "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
-                        "As an Assistant Learn to Sail Coach you are qualified to assist with the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
-                        "Your qualification is valid until ") + expiry_date + (" at which time you will need to revalidate. Please find enclosed your <b>Assistant Learn to Sail Coach (Dinghy) Certificate.</b> You can upgrade to a Learn to sail coach when you turn 18 or working with the feedback the coach developer has given to upgrade your certificate. When you are ready to upgrade, you can by filling out a revalidation from, available to download off the Yachting New Zealand website.   <br><br>"
-                        "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
-                        "If you are interested in furthering your coaching experience you may be keen to look at some becoming a Race Coach – information can be found under the <b>Coaches</b> page on the Yachting New Zealand website. Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
-                        "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
-                        "Regards,<br><br>") + email_signature
+                mail.HTMLBody = body
 
 #Attachments
                 course_certificate =  ('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.pdf')
@@ -149,10 +154,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
@@ -208,10 +210,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Head Coach, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Head Coach, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Head Coach, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
@@ -267,10 +266,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Buddy, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Buddy, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Buddy, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
@@ -327,10 +323,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 1, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 1, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 1, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
@@ -386,10 +379,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 2, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 2, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 2, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
@@ -445,10 +435,7 @@ while i < len(excel_sheet):
         
 #Save, convert to pdf, delete .docx
                 doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 3, ') + course_participant + ('.docx'))
-
-                from docx2pdf import convert
                 convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 3, ') + course_participant + ('.docx'))
-
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 3, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
