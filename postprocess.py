@@ -519,12 +519,3 @@ print(" ")
 
 #cc another person (alt email from crm?)
 #mail.CC = 'peters@yachtingnz.org.nz'
-
-
-#Disclaimer:
-#Moving this program, or any files associated with it, will cause it to break. Be sure to check & update the following:
-
-# - Install the necessary pip extensions
-# - Move the default certificate templates & update directories
-# - Specify where you want the auto created certs saved
-# - Update where Ynz safety req's directory

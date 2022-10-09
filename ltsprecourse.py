@@ -61,10 +61,10 @@ while i < len(excel_sheet):
                         "Any questions specifically on how the course will run for the sessions, make sure to get in contact with ") + coach_developer_email + ("<br><br>"
                         "Regards,<br><br>") + email_signature
 #Attachments
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
                 mail.Send()
 
                 print(('Precourse email to: ') + course_participant)
@@ -89,10 +89,10 @@ while i < len(excel_sheet):
                         "Regards,<br><br>") + email_signature
 
 #Attachments
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
                 mail.Send()
 
                 print(('Precourse email to: ') + course_participant)
@@ -121,10 +121,10 @@ mail.HTMLBody = personal_cd_touch + ("<br><br><br><br><br>") + ("Good day soon t
 
 #Attachments
 mail.attachments.Add('c:\\Users\Peters\Downloads\process_these.xlsx')
-# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
 mail.Send()
 
 print(('CD email to: ') + coach_developer_email)
