@@ -6,24 +6,15 @@ import os
 import re
 excel_sheet = pd.read_excel("c:/Users/Peters/Downloads/process_these.xlsx")
 
-print("")
 print("PRE COURSE EMAIL SYSTEM. ")
-print("Make sure the excel sheet is in the downloads folder and renamed 'process_these'")
-print("Do NOT delete the extra columns in the excel document.")
-print("If you have, quit this and just simplu blank them out - it will not work properly.")
-print("")
+print("Make sure the excel sheet is in the downloads folder and renamed 'process_these' \nDo NOT delete the extra columns in the excel document.")
+print("If you have, quit this and just simply blank them out - it will not work properly. \n")
 print("The type of course is either:")
-print("'online,' or")
-print("'traditional'")
-print("")
-print("If you don't enter one of these the program won't work")
-print("")
+print("'online,' or \n'traditional' \n")
+print("If you don't enter one of these the program won't work. \n")
 course_type = input("Enter the type of course: ")
-print("")
 coach_developer_email = input("Coach developer email: ")
-print("")
 start_date = input("Start date: ")
-print("")
 personal_cd_touch = input("What do you want to add for the coach developer: ")
 
 i = 0
