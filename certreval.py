@@ -1,23 +1,10 @@
 #Welcome! You are executing this to revalidate a certificate.
-
-print("")
-print("")
 course_participant = input("Participant name:")
 print("")
 participant_email = input("Email:")
-print("")
-print("Cert type from list below:")
-print("'assistcert'")
-print("'ltscert'")
-print("'headcert'")
-print("'racecert'")
-print("'keel1cert'")
-print("'keel2cert'")
-print("'keel3cert'")
-print("WARNING: Race and Keelboat certs are not added to the root directory and will crash.")
-print("")
+print("\nCert type from list below:")
+print("'assistcert' \n'ltscert' \n'headcert' \n'racecert' \n'keel1cert' \n'keel2cert' \n'keel2cert' \n'keel3cert' \n")
 certification_type = input("Cert type: ")
-print("")
 #Update this date yearly
 expiry_date = "30 June, 2025"
 
@@ -220,12 +207,3 @@ print(('Revalidation email sent to: ') + course_participant)
 
 #cc another person (alt email from crm?)
 #mail.CC = 'peters@yachtingnz.org.nz'
-
-
-
-#Disclaimer:
-#Moving this program, or any files associated with it, will cause it to break. Be sure to check and update the following if you move this
-#Install the necessary pip extensions
-#Move the default certificate templates and update root directories
-#Specify where you want the auto created certs dropped, update root directories
-#Update where Ynz safety req's goes, update root directories

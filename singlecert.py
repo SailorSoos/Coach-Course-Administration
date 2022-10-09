@@ -8,24 +8,14 @@ from docx.enum.style import WD_STYLE_TYPE
 import win32com.client
 import os.path
 
-print("")
 course_participant = input("Participant name:")
 participant_email = input("Email:")
-print("Cert type from list below:")
-print("Buddy = b")
-print("Assistant = a")
-print("LTS =  l")
-print("Head = h")
-print("Race = ra")
-print("Keelboat 1 = k1")
-print("Keelboat 2 = k2")
-print("Keelboat 3 = k3")
-print("")
-print("")
+print("Cert type from list below: \nBuddy = b \nAssistant = a \nLTS =  l \nHead = h \nRace = ra \nKeelboat 1 = k1 \nKeelboat 2 = k2 \nKeelboat 3 = k3")
+print("\n")
 certification_type = input("Cert type: ")
 print("")
 #Update this date yearly
-expiry_date = "30 June, 2025"
+expiry_date = "30 June, 2026"
 
 #Email signature details
 line_1 = ('<b><font color="rgb(0,65,92)"> Peter Soosalu | Coach Development Manager | Yachting New Zealand </font></b> <br>')

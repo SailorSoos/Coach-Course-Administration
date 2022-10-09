@@ -1,9 +1,9 @@
-#Yachting New Zealand precourse email program
-
 #Put the excel export to the path here, change 'process_these.xlsx' to the filename, or rename the filename in the download folder to 'process_these'
 import pandas as pd
 import os
 import re
+import win32com.client
+import os.path
 excel_sheet = pd.read_excel("c:/Users/Peters/Downloads/process_these.xlsx")
 
 print("PRE COURSE EMAIL SYSTEM. ")
@@ -39,16 +39,12 @@ while i < len(excel_sheet):
         line_7 = ('<br><br> <font size="-2" color="rgb(220,220,220)"> The content of this e-mail is confidential and may contain copyright information. If you are not the intended recipient, please delete the </font><br> <font size="-2" color="rgb(220,220,220)">message and notify the sender immediately. You should scan this message and any attached files for viruses. We accept no liability for </font><br><font size="-2" color="rgb(220,220,220)"> any loss caused either directly or indirectly by a virus arising from the use of this message or any attached file. Thank you. </font>')
         email_signature = (line_1 + line_2 + line_3 + line_4 + line_5 + line_6 + line_7)
 
-
+        #outlook mail portion
+        outlook = win32com.client.Dispatch('outlook.application')
+        mail = outlook.CreateItem(0)
 
 #Online version
         if course_type == 'online':
-
-#Outlook mail portion
-                import win32com.client
-                import os.path
-                outlook = win32com.client.Dispatch('outlook.application')
-                mail = outlook.CreateItem(0)
 
 #Create the email 
                 mail.To = participant_email
@@ -64,28 +60,20 @@ while i < len(excel_sheet):
                         "<b><u>Other requirements</u></b><br><br>Be sure to bring the following to the course<br><br> - Any gear necessary to keep warm on the water as a coach<br><br> - Lifejacket<br><br> - Whistle<br><br> - Wet notes and pencil<br><br>"
                         "Any questions specifically on how the course will run for the sessions, make sure to get in contact with ") + coach_developer_email + ("<br><br>"
                         "Regards,<br><br>") + email_signature
-
 #Attachments
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
                 mail.Send()
 
                 print(('Precourse email to: ') + course_participant)
                 i +=1
 
 
-
 #Traditional version
         elif course_type == 'traditional':
             
-#Outlook mail portion
-                import win32com.client
-                import os.path
-                outlook = win32com.client.Dispatch('outlook.application')
-                mail = outlook.CreateItem(0)
-
 #Create the email 
                 mail.To = participant_email
                 mail.Subject = "Yachting New Zealand - Coaching Course Details"
@@ -101,10 +89,10 @@ while i < len(excel_sheet):
                         "Regards,<br><br>") + email_signature
 
 #Attachments
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-                mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+                # mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
                 mail.Send()
 
                 print(('Precourse email to: ') + course_participant)
@@ -115,11 +103,6 @@ while i < len(excel_sheet):
 
 
 #Email for coach developer
-
-#Outlook mail portion
-import win32com.client
-import os.path
-outlook = win32com.client.Dispatch('outlook.application')
 mail = outlook.CreateItem(0)
 
 #Create the email 
@@ -137,19 +120,11 @@ mail.HTMLBody = personal_cd_touch + ("<br><br><br><br><br>") + ("Good day soon t
         "Regards,<br><br>") + email_signature
 
 #Attachments
-
 mail.attachments.Add('c:\\Users\Peters\Downloads\process_these.xlsx')
-mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
-mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
-mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
-mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
+# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Accessing Embark.pdf')
+# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\Guide - how to print in Embark.docx')
+# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Back End to write on.doc')
+# mail.attachments.Add('c:\\Users\Peters\Documents\CDM\Certificates\Attachments\LTS Coach Manual - Lesson Plan on and off water.doc')
 mail.Send()
 
 print(('CD email to: ') + coach_developer_email)
-                
-        
-
-
-
-
-
