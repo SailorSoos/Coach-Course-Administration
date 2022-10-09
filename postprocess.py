@@ -4,14 +4,37 @@
 #The only input to change year to year is course expiry_date on 33
 
 #Put the excel export to the path here, change 'process_these.xlsx' to the filename, or rename the filename in the download folder to 'process_these'
+from numpy import NaN
 import pandas as pd
 import os
 import docx
 import re
+from sqlalchemy import null
+import win32com.client
+import os.path
 from docx.api import Document
 from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
 excel_sheet = pd.read_excel("c:/Users/Peters/Downloads/process_these.xlsx")
+
+#Email signature details
+line_1 = ('<b><font color="rgb(0,65,92)"> Peter Soosalu | Coach Development Manager | Yachting New Zealand </font></b> <br>')
+line_2 = ('<b><font color="rgb(0,65,92)">M</b></font> <font color="rgb(0,65,92)">(021) 037 2419 </font>| <b><font color="rgb(0,65,92)">E</font></b> peters@yachting.org.nz <br>')
+line_3 = ('<a href="http://www.yachtingnz.org.nz">Yachtingnz.org.nz</a> | <a href="https://www.facebook.com/YachtingNewZealand/">Facebook</a> | <a href="https://www.facebook.com/NZLSailingTeam/">NZL Sailing Team</a>') 
+line_4 = ('<br><br> For the latest news and offerings download the Yachting New Zealand app.') 
+line_5 = ('<br><a href="https://apps.apple.com/us/app/yachting-nz-app/id1040333130?amp%3Bls=1&amp%3Bamp%3Bmt=8&amp%3Bl=nl"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" width="108" height="36" alt="app_store"></a> <a href="https://play.google.com/store/apps/details?id=com.app.p1107GC"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_E6ZM5CF_cPm4tzqW6MpFGm2efBY1QL6v6w&usqp=CAU" width="108" height="36" alt="android_store"></a>')
+line_6 = ('<br><br><img src="https://i.ibb.co/w7Lfz35/99798ce7-9981-4308-8295-3b3fa5386314.jpg" alt="ynz_banner">')
+line_7 = ('<br><br> <font size="-2" color="rgb(220,220,220)"> The content of this e-mail is confidential and may contain copyright information. If you are not the intended recipient, please delete the </font><br> <font size="-2" color="rgb(220,220,220)">message and notify the sender immediately. You should scan this message and any attached files for viruses. We accept no liability for </font><br><font size="-2" color="rgb(220,220,220)"> any loss caused either directly or indirectly by a virus arising from the use of this message or any attached file. Thank you. </font>')
+email_signature = (line_1 + line_2 + line_3 + line_4 + line_5 + line_6 + line_7)
+
+#Generic form for the Learn to Sail coach certificate, plus one of the below:
+#LTS = "As a Learn to Sail Coach you are qualified to teach all aspects of the"
+#Assistant = "As an Assistant Learn to Sail Coach you are qualified to assist with the"
+#Head = "As a Head Learn to Sail Coach you are qualified to teach all aspects of the"
+#buddy = "As a Buddy Learn to Sail Coach you are qualified to assist with the"
+
+#Generic form of the Keelboat cert, nothing specific to add
+#Generic form of the race and regatta cert, nothing specific to add
 
 i = 0
 while i < len(excel_sheet):
@@ -46,21 +69,15 @@ while i < len(excel_sheet):
         expiry_date = "30 June, 2025"
         participant_email = participant_details[3]
 
-#Email signature details
-        line_1 = ('<b><font color="rgb(0,65,92)"> Peter Soosalu | Coach Development Manager | Yachting New Zealand </font></b> <br>')
-        line_2 = ('<b><font color="rgb(0,65,92)">M</b></font> <font color="rgb(0,65,92)">(021) 037 2419 </font>| <b><font color="rgb(0,65,92)">E</font></b> peters@yachting.org.nz <br>')
-        line_3 = ('<a href="http://www.yachtingnz.org.nz">Yachtingnz.org.nz</a> | <a href="https://www.facebook.com/YachtingNewZealand/">Facebook</a> | <a href="https://www.facebook.com/NZLSailingTeam/">NZL Sailing Team</a>') 
-        line_4 = ('<br><br> For the latest news and offerings download the Yachting New Zealand app.') 
-        line_5 = ('<br><a href="https://apps.apple.com/us/app/yachting-nz-app/id1040333130?amp%3Bls=1&amp%3Bamp%3Bmt=8&amp%3Bl=nl"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" width="108" height="36" alt="app_store"></a> <a href="https://play.google.com/store/apps/details?id=com.app.p1107GC"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_E6ZM5CF_cPm4tzqW6MpFGm2efBY1QL6v6w&usqp=CAU" width="108" height="36" alt="android_store"></a>')
-        line_6 = ('<br><br><img src="https://i.ibb.co/w7Lfz35/99798ce7-9981-4308-8295-3b3fa5386314.jpg" alt="ynz_banner">')
-        line_7 = ('<br><br> <font size="-2" color="rgb(220,220,220)"> The content of this e-mail is confidential and may contain copyright information. If you are not the intended recipient, please delete the </font><br> <font size="-2" color="rgb(220,220,220)">message and notify the sender immediately. You should scan this message and any attached files for viruses. We accept no liability for </font><br><font size="-2" color="rgb(220,220,220)"> any loss caused either directly or indirectly by a virus arising from the use of this message or any attached file. Thank you. </font>')
-        email_signature = (line_1 + line_2 + line_3 + line_4 + line_5 + line_6 + line_7)
-
+        #add this as a universal item in a class 
+        path = ('c:\\Users\Peters\Documents\CDM\Certificates')
+        course_type = "Assistant"
+        
 #assistcert starts here
         if course_certification == 'assistcert':
 
 #Make a certificate for the course_participant
-                doc = docx.Document('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Templates\LTSAssistant.docx')
+                doc = docx.Document(path + '\Auto_created_certs\Templates\LTSAssistant.docx')
 
 #Change the font size and type
                 obj_styles = doc.styles
@@ -76,16 +93,12 @@ while i < len(excel_sheet):
                                 paragraph.text = course_participant
         
 #Save, convert to pdf, delete .docx
-                doc.save(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
-
+                doc.save((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
                 from docx2pdf import convert
-                convert(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
-
-                os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
+                convert((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
+                os.remove((path + '\Auto_created_certs\Yachting New Zealand - LTS Assistant, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -115,8 +128,6 @@ while i < len(excel_sheet):
                 print(('Certification email sent to: ') + course_participant)
                 i +=1
 
-
-
 #ltscert starts here
         elif course_certification == 'ltscert':
 
@@ -145,8 +156,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -206,8 +215,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Head Coach, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -267,8 +274,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - LTS Buddy, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -329,8 +334,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 1, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -390,8 +393,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 2, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -451,8 +452,6 @@ while i < len(excel_sheet):
                 os.remove(('c:\\Users\Peters\Documents\CDM\Certificates\Auto_created_certs\Yachting New Zealand - Keelboat 3, ') + course_participant + ('.docx'))
 
 #Outlook mail portion
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
@@ -486,9 +485,6 @@ while i < len(excel_sheet):
 
 #You need to complete embark
         if course_certification == 'doembark':
-
-                import win32com.client
-                import os.path
                 outlook = win32com.client.Dispatch('outlook.application')
                 mail = outlook.CreateItem(0)
 
