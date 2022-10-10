@@ -23,6 +23,36 @@ email_signature = ('<b><font color="rgb(0,65,92)"> Peter Soosalu | Coach Develop
 #refine these into effective functions
 #email function
 def email(course_participant, course_certificate, participant_email, course_type, path):
+        
+        LTSbody = (("Dear ") + course_participant + (",<br><br>You have successfully completed the Yachting New Zealand Learn to Sail Coach Course. I am pleased to advise that you are now an officially recognised <b> Assistant Learn to Sail Coach. </b>"
+                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
+                "As a ") + course_type1 + (" you are qualified to assist with the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
+                "Your qualification is valid until ") + expiry_date + (" at which time you will need to revalidate. Please find enclosed your <b>") + course_type2 + ("</b> You can upgrade to a Learn to sail coach when you turn 18 or working with the feedback the coach developer has given to upgrade your certificate. When you are ready to upgrade, you can by filling out a revalidation from, available to download off the Yachting New Zealand website.   <br><br>"
+                "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
+                "If you are interested in furthering your coaching experience you may be keen to look at some becoming a Race Coach – information can be found under the <b>Coaches</b> page on the Yachting New Zealand website. Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
+                "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
+                "Regards,<br><br>") + email_signature)
+
+        KBbody = (("Dear ") + course_participant + (",<br><br>I am pleased to advise that you are now an officially recognised <b>") + registrations_qual + (". </b>"
+                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
+                "As a keelboat coach, mentoring and supporting other coaches in your area is not only encouraged, but can help improve your own coaching experience by sharing ideas and seeing new ones. <br><br>"
+                "Your qualification does not have a set required sailor to coach ratio, but it is recommended to have a max ratio of 7:1.<br><br>"
+                "Your qualification is valid until ") + expiry_date + (" at which time you will need to revalidate. Please find enclosed your <b> ") + registrations_qual + (" Certificate.</b> <br><br>"
+                "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
+                "Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
+                "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
+                "Regards,<br><br>") + email_signature)
+
+        Racebody = (("Dear ") + course_participant + (",<br><br>I am pleased to advise that you are now an officially recognised <b> Race Coach. </b>"
+                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
+                "The Race Coach is the first step along the race coach pathway, followed by the Regatta coach, Performance coach, and finally Olympic coach. As a race coach, mentoring and supporting other coaches in your area is not only encouraged, but can help improve your own coaching experience by sharing ideas and seeing new ones. <br><br>"
+                "Your qualification does not have a set required sailor to coach ratio, but it is recommended to have a max ratio of 6:1.<br><br>"
+                "Your qualification is valid until ") + expiry_date + (" at which time you will need to revalidate. Please find enclosed your <b> Race Coach Certificate.</b> <br><br>"
+                "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
+                "Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
+                "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
+                "Regards,<br><br>") + email_signature)
+        
         outlook = win32com.client.Dispatch('outlook.application')
         mail = outlook.CreateItem(0)
         mail.To = participant_email
@@ -50,10 +80,6 @@ def certificate(course_participant, course_type, template_path, output_path):
         doc.save((output_path + 'Yachting New Zealand - ') + course_participant + ('.docx'))
         convert((output_path + 'Yachting New Zealand - ') + course_participant + ('.docx'))
         os.remove((output_path + 'Yachting New Zealand - ') + course_participant + ('.docx'))
-
-
-
-
 
 i = 0
 while i < len(excel_sheet):
