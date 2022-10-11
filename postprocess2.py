@@ -1,8 +1,6 @@
-from numpy import NaN
 import pandas as pd
 import os
 import docx
-import re
 import win32com.client
 import os.path
 from docx.api import Document
@@ -54,27 +52,20 @@ def email(course_participant, course_certificate, participant_email, course_type
                 "Regards,<br><br>") + email_signature)
     elif course_type == 'Learn to Sail' or 'Learn to Sail Assistant' or 'Learn to Sail Buddy' or 'Learn to Sail Head':
         if course_type == 'Learn to Sail':
-            ltsText = "you are qualified to teach all aspects of the"
-        elif course_type == "Learn to Sail Assistant" or "Learn to Sail Buddy":
-            ltsText = "you are qualified to assist with the"
+            courseText = "As a Learn to Sail coach you are qualified to teach all aspects of the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
         elif course_type == "Learn to Sail Head":
-            ltsText = "qualified to teach all aspects of the"
-        body = (("Dear ") + course_participant + (",<br><br>You have successfully completed the Yachting New Zealand Learn to Sail Coach Course. I am pleased to advise that you are now an officially recognised <b> ") + course_type + (" Coach. </b>"
-                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
-                "As a ") + course_type +(" coach ") + ltsText + (" Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
-                "Your qualification is valid until ") + registrations_expiry + (" at which time you will need to revalidate. Please find enclosed your <b>") + course_type + ("</b> certificate. You can upgrade to a Learn to sail coach when you turn 18 or working with the feedback the coach developer has given to upgrade your certificate. When you are ready to upgrade, you can by filling out a revalidation from, available to download off the Yachting New Zealand website.   <br><br>"
+            courseText = "As a Learn to Sail Head coach you are qualified to teach all aspects of the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
+        elif course_type == "Learn to Sail Assistant":
+            courseText = "As an assistant Learn to Sail coach you are qualified to assist with the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
+        elif course_type == "Learn to Sail Buddy":
+            courseText = "As an Buddy Learn to Sail coach you are qualified to assist with the Yachting New Zealand Learn to Sail Dinghy (Level I and II) program. These levels can be taught at yacht clubs and other Yachting New Zealand affiliated organisations subject to the Yachting New Zealand safety requirements. <br><br>"
+        elif course_type == 'Keelboat 1' or 'Keelboat 2' or 'Keelboat 3':
+            courseText = "As a keelboat coach, mentoring and supporting other coaches in your area is not only encouraged, but can help improve your own coaching experience by sharing ideas and seeing new ones. <br><br> Your qualification does not have a set required sailor to coach ratio, but it is recommended to have a max ratio of 7:1.<br><br>"
+        body = (("Dear ") + course_participant + (",<br><br>You have successfully completed the Yachting New Zealand ") + course_type +(" Coach Course. I am pleased to advise that you are now an officially recognised <b> ") + course_type + (" Coach. </b>"
+                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>")
+                 + courseText + ("Your qualification is valid until ") + registrations_expiry + (" at which time you will need to revalidate. Please find enclosed your <b>") + course_type + ("</b> certificate. You can upgrade to a Learn to sail coach when you turn 18 or working with the feedback the coach developer has given to upgrade your certificate. When you are ready to upgrade, you can by filling out a revalidation from, available to download off the Yachting New Zealand website.   <br><br>"
                 "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
                 "If you are interested in furthering your coaching experience you may be keen to look at some becoming a Race Coach – information can be found under the <b>Coaches</b> page on the Yachting New Zealand website. Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
-                "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
-                "Regards,<br><br>") + email_signature)
-    elif course_type == 'Keelboat 1' or 'Keelboat 2' or 'Keelboat 3':
-        body = (("Dear ") + course_participant + (",<br><br>I am pleased to advise that you are now an officially recognised <b>") + registrations_qual + (". </b>"
-                "As part of an effort to reduce the carbon footprint certificates make, I have attached your certificate as a pdf for you to download. If you would like a hard copy of the certificate, please let me know, along with your mailing address, and I can make sure it gets to the right place. <br><br>"
-                "As a keelboat coach, mentoring and supporting other coaches in your area is not only encouraged, but can help improve your own coaching experience by sharing ideas and seeing new ones. <br><br>"
-                "Your qualification does not have a set required sailor to coach ratio, but it is recommended to have a max ratio of 7:1.<br><br>"
-                "Your qualification is valid until ") + registrations_expiry + (" at which time you will need to revalidate. Please find enclosed your <b> ") + registrations_qual + (" Certificate.</b> <br><br>"
-                "Although not mandatory, we do highly recommend that the following courses be added to your qualifications: RYA Powerboat level 2, current first aid certificate and you may also consider a VHF Operators Certificate. Information can be found on the Yachting New Zealand and Coastguard Boating Education websites.<br><br>"
-                "Also check out the Yachting New Zealand Coaches Forum Facebook group.<br><br>"
                 "Congratulations again on attaining this qualification. Please do not hesitate to contact me at any time if you require any additional assistance or guidance during your coaching.<br><br>"
                 "Regards,<br><br>") + email_signature)
     elif course_type == 'Race':
@@ -116,9 +107,6 @@ while i < len(excel_sheet):
     registrations_name = str(registrations_name1)
     registrations_qual1 = excel_sheet.iloc[i, 7]
     registrations_qual = str(registrations_qual1)
-    #if I figure out how to format the date stamp, add it here
-    # registrations_expiry1 = excel_sheet.iloc[i, 8]
-    # registrations_expiry =str(registrations_expiry1)
     registrations_email1 = excel_sheet.iloc[i, 11]
     registrations_email = str(registrations_email1)
 
