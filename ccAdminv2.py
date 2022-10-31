@@ -1,16 +1,7 @@
-#import os
-#import os.path
-#import time
-
-#import docx
-#from docx.api import Document
-#from docx.enum.style import WD_STYLE_TYPE
-#from docx.shared import Pt
-#from docx2pdf import convert
-#import pandas as pd
+#bring on the sass :D
 import win32com.client
 
-from common import certificate, email, revalEmail, Universal
+from common import Universal, certificate, email, revalEmail
 
 print("Welcome to the new and improved coaching automation system! \n You have a few options of what you can do. Type an option from the list below.")
 print("As always, the course list of participants must be in your downloads folder, and renamed 'process_these.xlsx'")
@@ -18,7 +9,6 @@ print("The options are: \n Post process (pp) \n Revalidation (r) \n Pre Course (
 selected_option = input("What do you want to do?! Please tell me :): ")
 print("FINNNNNEEEEE! I'm doing it as quick as I can. Prepare to be yelled at if you haven't selected one of the above options. \n \n I'll even update you on how we're doing, bud.")
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------
 #POST PROCESS
 if selected_option == 'pp':
@@ -56,8 +46,6 @@ if selected_option == 'pp':
 
     print("\n DAYUMN, are we already done?! \n That happened WAY too fast. Maybe you should take the rest of the day off. \n")
 
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------
 #CERT REVALIDATION
 elif selected_option == 'r':
@@ -73,7 +61,6 @@ elif selected_option == 'r':
     print("")
     print(('Revalidation email sent to: ') + course_participant)
 
-#----------------------------------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------------------------------
 #LTS precourse
 elif selected_option == 'pc':
@@ -91,14 +78,12 @@ elif selected_option == 'pc':
             registrations_email = str(registrations_email1)
             participant_details = [registrations_name, registrations_email]
 
-    #Generic course related details trying to loop
             course_participant = participant_details[0]
             participant_email = participant_details[1]
 
             #outlook mail portion
             outlook = win32com.client.Dispatch('outlook.application')
             mail = outlook.CreateItem(0)
-
             if course_type == 'online':
                     mail.To = participant_email
                     mail.Subject = "Yachting New Zealand - Coaching Course Details"
@@ -120,7 +105,6 @@ elif selected_option == 'pc':
                     mail.Send()
                     print(('Precourse email to: ') + course_participant)
                     i +=1
-
             else:
                     mail.To = participant_email
                     mail.Subject = "Yachting New Zealand - Coaching Course Details"
@@ -166,8 +150,6 @@ elif selected_option == 'pc':
 
     print(('CD email to: ') + coach_developer_email)
 
-
-#---------------------------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 #single cert script
 elif selected_option == 'pc':
