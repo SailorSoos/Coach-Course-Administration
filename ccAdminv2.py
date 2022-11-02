@@ -62,6 +62,8 @@ elif selected_option == 'r':
     print(('Revalidation email sent to: ') + course_participant)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------
+#consider bringing this into common.py
+
 #LTS precourse
 elif selected_option == 'pc':
     print("The type of course is either: \n'online,' or \n'traditional' \n")

@@ -9,7 +9,7 @@ from docx2pdf import convert
 import pandas as pd
 import win32com.client
 
-
+#likely want to rework this section againS
 class Universal():
         email_signature = ('<b><font color="rgb(0,65,92)"> Peter Soosalu | Coach Development Manager | Yachting New Zealand </font></b> <br>'
         '<b><font color="rgb(0,65,92)">M</b></font> <font color="rgb(0,65,92)">(021) 037 2419 </font>| <b><font color="rgb(0,65,92)">E</font></b> peters@yachting.org.nz <br>'
